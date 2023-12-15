@@ -21,11 +21,16 @@ inputs:
   file:
     description: 'Path to the file where the OpenVEX document will be written'
     required: false
+outputs:
+  openvex:
+    description: "Generated OpenVEX document"
+    value: ${{ steps.generate.outputs.openvex }}
 runs:
   using: "composite"
   steps:
     - uses: openvex/setup-vexctl@e85ca48f3c8a376289f6476129d59cda82147e71 # v0.1.1
     - shell: bash
+      id: generate
       run: |
         #!/bin/bash
 
@@ -37,4 +42,6 @@ runs:
           alias log_error="echo \"ERROR:\""
         fi
 
-        vexctl generate "${{ inputs.product }}" --file="${{ inputs.file }}" --templates="${{ inputs.templates-dir }}"
+        echo "openvex<<GITHUB_OUTPUT_EOF" >> $GITHUB_OUTPUT
+        vexctl generate "${{ inputs.product }}" --file="${{ inputs.file }}" --templates="${{ inputs.templates-dir }}"  | tee -a $GITHUB_OUTPUT
+        echo "GITHUB_OUTPUT_EOF" >> $GITHUB_OUTPUT
