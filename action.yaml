@@ -11,7 +11,7 @@ branding:
   color: 'blue'
 # This is pinned to the last major release, we have to bump it for each action version.
 inputs:
-  templates-dir:
+  templates_dir:
     description: 'OpenVEX templates directory'
     required: false
     default: .openvex/templates'
@@ -36,4 +36,4 @@ runs:
           alias log_info="echo \"INFO:\""
           alias log_error="echo \"ERROR:\""
 
-        vexctl generate --product="${{ inputs.product }}" --file="${{ inputs.product }}" --t="${{ templates-dir }}"
+        vexctl generate --product="${{ inputs.product }}" --file="${{ inputs.product }}" --t="${{ templates_dir }}"
