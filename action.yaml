@@ -21,6 +21,7 @@ inputs:
   file:
     description: 'Path to the file where the OpenVEX document will be written'
     required: false
+    default: '/dev/stdout'
 outputs:
   openvex:
     description: "Generated OpenVEX document"
