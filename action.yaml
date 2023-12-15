@@ -1,0 +1,39 @@
+#
+# Copyright 2023 The OpenVEX Authors
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: generate-vex
+author: The OpenVEX Authors
+description: 'Generates VEX data using the OpenVEX tooling'
+branding:
+  icon: 'package'
+  color: 'blue'
+# This is pinned to the last major release, we have to bump it for each action version.
+inputs:
+  templates-dir:
+    description: 'OpenVEX templates directory'
+    required: false
+    default: .openvex/templates'
+  product:
+    description: 'Identifier of the product to be VEXed'
+    required: true
+  file:
+    description: 'Path to the file where the OpenVEX document will be written'
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - uses: openvex/setup-vexctl@d0cfef7e0264d6fbb83de3ce0a4cb13d61ab9cb2 # v0.1.0
+    - shell: bash
+      run: |
+        #!/bin/bash
+
+        if [ -z "$NO_COLOR" ]; then
+          alias log_info="echo -e \"\033[1;32mINFO\033[0m:\""
+          alias log_error="echo -e \"\033[1;31mERROR\033[0m:\""
+        else
+          alias log_info="echo \"INFO:\""
+          alias log_error="echo \"ERROR:\""
+
+        vexctl generate --product="${{ inputs.product }}" --file="${{ inputs.product }}" --t="${{ templates-dir }}"
