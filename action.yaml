@@ -37,4 +37,6 @@ runs:
           alias log_error="echo \"ERROR:\""
         fi
 
-        vexctl generate --product="${{ inputs.product }}" --file="${{ inputs.product }}" --t="${{ inputs.templates-dir }}"
+        vexctl generate --product="${{ inputs.product }}" \ 
+            --file="${{ inputs.product }}" \ 
+            --template="${{ inputs.templates-dir }}"
